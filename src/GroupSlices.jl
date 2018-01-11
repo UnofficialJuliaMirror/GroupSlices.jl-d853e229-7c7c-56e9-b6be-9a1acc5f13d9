@@ -44,7 +44,7 @@ end
         end
 
         # Collect index of first row for each hash
-        uniquerow = Array(Int, size(A, dim))
+        uniquerow = Array{Int}(size(A, dim))
         firstrow = Dict{Prehashed,Int}()
         for k = 1:size(A, dim)
             uniquerow[k] = get!(firstrow, Prehashed(hashes[k]), k)
@@ -128,7 +128,7 @@ function groupinds(ic::Vector{Int})
         d[ia[i]]= i
     end
 
-    ib = Array(Vector{Int},n)
+    ib = Array{Vector{Int}}(n)
     for k = 1:n
         ib[k] = Int[]
     end
@@ -160,7 +160,7 @@ operates on the output returned from `groupinds(ic::Vector{Int})`.
 function firstinds(ic::Vector{Int})
     id = unique(ic)
     n = length(id)
-    ia = Array(Int,n)
+    ia = Array{Int}(n)
     for i = 1:n
         ia[i] = findfirst(ic, id[i])
     end
