@@ -1,4 +1,6 @@
-# GroupSlices
+# GroupSlices.jl
+
+[![Build Status](https://travis-ci.org/mcabbott/GroupSlices.jl.svg?branch=master)](https://travis-ci.org/mcabbott/GroupSlices.jl)
 
 The function `groupslices` is related to `unique`, but instead of returning the unique elements, 
 it returns a list of indices showing where an equivalent entry first appeared. Like this:
