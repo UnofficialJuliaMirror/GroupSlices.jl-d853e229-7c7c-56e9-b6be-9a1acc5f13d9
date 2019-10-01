@@ -2,7 +2,7 @@ name = "GroupSlices"
 uuid = "d853e229-7c7c-56e9-b6be-9a1acc5f13d9"
 author = ["Andy Greenwell"]
 license = "MIT"
-version = "0.0.2"
+version = "0.0.3"
 
 [compat]
 julia = "1"

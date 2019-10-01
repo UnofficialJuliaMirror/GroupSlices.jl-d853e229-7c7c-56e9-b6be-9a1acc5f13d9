@@ -11,21 +11,35 @@ end
 hash(x::Prehashed) = x.hash
 
 """
-    groupslices(A, dim)
+    groupslices(V::AbstractVector)
+
+Returns a vector of integers the same length as `V`,
+which in place of each entry `x` has the index of the first entry of `V` which is equal to `x`.
+This is true:
+```
+all(x == V[i] for (x,i) in zip(V, groupslices(V)))
+```
+"""
+groupslices(A::AbstractArray{T,N}; dims::Int=1) where {T,N} = groupslices(A, dims)
+
+"""
+    groupslices(A; dims) = groupslices(A, dims)
+
 Returns a vector of integers where each integer element of the returned vector
-is a group number corresponding to the unique slices along dimension `dim` as
-returned from `unique(A, dim)`, where `A` can be a multidimensional array.
+is a group number corresponding to the unique slices along dimension `dims` as
+returned from `unique(A; dims=d)`, where `A` can be a multidimensional array.
+The default is `dims = 1`.
 
 Example usage:
 
-If `C = unique(A, dim)`, `ic = groupslices(A, dim)`, and
+If `C = unique(A; dims=dims)`, `ic = groupslices(A, dims)`, and
 `ndims(A) == ndims(C) == 3`, then:
 ```
-if dim == 1
+if dims == 1
    all(A .== C[ic,:,:])
-elseif dim == 2
+elseif dims == 2
    all(A .== C[:,ic,:])
-elseif dim == 3
+elseif dims == 3
    all(A .== C[:,:,ic])
 end
 ```
@@ -113,6 +127,7 @@ end
 
 """
     groupinds(ic)
+
 Returns a vector of vectors of integers wherein the vector of group slice
 index integers as returned from `groupslices(A, dim)` is converted into a
 grouped vector of vectors.  Each vector entry in the returned vector of
@@ -162,7 +177,7 @@ function firstinds(ic::Vector{Int})
     n = length(id)
     ia = Array{Int}(undef,n)
     for i = 1:n
-        ia[i] = something(findfirst(isequal(id[i]), ic), 0) # findfirst(ic, id[i]) 
+        ia[i] = something(findfirst(isequal(id[i]), ic), 0) # findfirst(ic, id[i])
     end
     return ia
 end
@@ -173,6 +188,7 @@ end
 
 """
     lastinds(ic::Vector{Int})
+
 Returns a vector of integers containing the last index position of each unique
 value in the input integer vector `ic`.
 

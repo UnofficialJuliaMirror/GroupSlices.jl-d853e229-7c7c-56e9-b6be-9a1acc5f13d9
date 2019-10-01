@@ -49,3 +49,10 @@ ia2_test = lastinds(ib_test)
 @test isequal(ia, ia_test)
 @test isequal(ia1, ia1_test)
 @test isequal(ia2, ia2_test)
+
+# Tests when adding keyword dims
+V = [1,1,5,6,1,5,9]
+@test all(x == V[i] for (x,i) in zip(V, groupslices(V)))
+
+@test groupslices(E; dims=1) == groupslices(E, 1) == groupslices(E)
+@test groupslices(E; dims=2) == groupslices(E, 2)
